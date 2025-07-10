@@ -1,6 +1,8 @@
 package ibm.event.sync.EventSync.dtos;
 
 import ibm.event.sync.EventSync.entities.Event;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -13,25 +15,24 @@ public class FeedbackDTO {
 
     private LocalDateTime dateTime;
 
-    private Event event;
+    private EventDTO eventDTO;
 
+    @Enumerated(EnumType.STRING)
     private SentimentValue sentiment;
 
     public FeedbackDTO() {
     }
 
-    public FeedbackDTO(String message, LocalDateTime dateTime, Event event, SentimentValue sentiment) {
+    public FeedbackDTO(String message,LocalDateTime dateTime, EventDTO eventDTO, SentimentValue sentiment) {
         this.message = message;
-        this.dateTime = dateTime;
-        this.event = event;
+        this.eventDTO = eventDTO;
         this.sentiment = sentiment;
     }
 
-    public FeedbackDTO(UUID id, String message, LocalDateTime dateTime, Event event, SentimentValue sentiment) {
+    public FeedbackDTO(UUID id, String message,LocalDateTime dateTime, EventDTO eventDTO, SentimentValue sentiment) {
         this.id = id;
         this.message = message;
-        this.dateTime = dateTime;
-        this.event = event;
+        this.eventDTO = eventDTO;
         this.sentiment = sentiment;
     }
 
@@ -59,12 +60,12 @@ public class FeedbackDTO {
         this.dateTime = dateTime;
     }
 
-    public Event getEvent() {
-        return event;
+    public EventDTO getEventDTO() {
+        return eventDTO;
     }
 
-    public void setEvent(Event event) {
-        this.event = event;
+    public void setEventDTO(EventDTO eventDTO) {
+        this.eventDTO = eventDTO;
     }
 
     public SentimentValue getSentiment() {

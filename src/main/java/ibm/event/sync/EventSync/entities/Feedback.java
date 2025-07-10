@@ -1,10 +1,7 @@
 package ibm.event.sync.EventSync.entities;
 
 import ibm.event.sync.EventSync.dtos.SentimentValue;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -20,6 +17,8 @@ public class Feedback {
 
     private LocalDateTime dateTime;
 
+    @ManyToOne
+    @JoinColumn(name = "event_id", nullable = false)
     private Event event;
 
     private SentimentValue sentiment;
