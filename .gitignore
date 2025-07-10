@@ -25,3 +25,5 @@ replay_pid*
 
 # to exclude the API key from being pushed
 src/main/resources/application.properties
+
+target/
