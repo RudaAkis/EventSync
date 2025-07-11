@@ -14,9 +14,9 @@ import java.util.UUID;
 public interface FeedbackRepository extends JpaRepository<Feedback, UUID> {
 
     @Query("""
-           Select new ibm.event.sync.EventSync.dtos.SentimentSummaryDTO (f.sentiment, COUNT(f)) 
-           FROM Feedback f 
-           WHERE f.event.id = :eventId 
+           SELECT new ibm.event.sync.EventSync.dtos.SentimentSummaryDTO (f.sentiment, COUNT(f))
+           FROM Feedback f
+           WHERE f.event.id = :eventId
            GROUP BY f.sentiment""")
     List<SentimentSummaryDTO> getSentimentSummaryByEvent(@Param("eventId") UUID eventId);
 }

@@ -1,9 +1,6 @@
 package ibm.event.sync.EventSync.services;
 
-import ibm.event.sync.EventSync.dtos.FeedbackDTO;
-import ibm.event.sync.EventSync.dtos.FeedbackSubmitDTO;
-import ibm.event.sync.EventSync.dtos.SentimentResponseDTO;
-import ibm.event.sync.EventSync.dtos.SentimentValue;
+import ibm.event.sync.EventSync.dtos.*;
 import ibm.event.sync.EventSync.entities.Event;
 import ibm.event.sync.EventSync.entities.Feedback;
 import ibm.event.sync.EventSync.mappers.EventMapper;
@@ -15,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -61,6 +59,14 @@ public class FeedbackService {
         Feedback savedFeedback = feedbackRepository.save(feedback);
 
         return feedbackMapper.toDTO(savedFeedback, eventMapper.toDTO(event));
+    }
+
+    public List<SentimentSummaryDTO> getSentimentSummaryForEvent(UUID eventId){
+        List<SentimentSummaryDTO> sentimentSummaryList = feedbackRepository.getSentimentSummaryByEvent(eventId);
+        for (SentimentSummaryDTO s : sentimentSummaryList){
+            System.out.println(s.getSentiment() + " " + s.getCount());
+        }
+        return sentimentSummaryList;
     }
 
 }
