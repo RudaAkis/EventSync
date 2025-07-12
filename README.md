@@ -71,6 +71,15 @@ POST `/events/{eventId}/feedback`	Submit feedback for event
 
 GET	`/events/{eventId}/summary` Get summary of sentiments
 
+### Once the backend is running, Swagger UI is available at:
+
+http://localhost:8080/swagger-ui/index.html
+
+This provides:
+
+Interactive documentation for all REST endpoints
+
+
 H2 Console: http://localhost:8080/h2-console
 
 Frontend
