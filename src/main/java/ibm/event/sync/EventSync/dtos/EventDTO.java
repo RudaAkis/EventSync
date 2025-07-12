@@ -1,13 +1,17 @@
 package ibm.event.sync.EventSync.dtos;
 
+import jakarta.validation.constraints.NotBlank;
+
 import java.util.UUID;
 
 public class EventDTO {
 
     private UUID id;
 
+    @NotBlank(message = "Event name cannot be empty")
     private String name;
 
+    @NotBlank(message = "Event description cannot be empty")
     private String description;
 
     public EventDTO() {

@@ -1,6 +1,7 @@
 package ibm.event.sync.EventSync.services;
 
 import ibm.event.sync.EventSync.dtos.SentimentResponseDTO;
+import ibm.event.sync.EventSync.exceptionHandling.exceptions.EmptyFeedbackMessageException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -23,6 +24,10 @@ public class SentimentService {
     }
 
     public SentimentResponseDTO[] analyzeSentiment(String message) {
+        if (message == null || message.isBlank()) {
+            throw new EmptyFeedbackMessageException("Feedback message cannot be blank");
+        }
+
         Map<String, String> requestBody = Map.of("inputs", message);
 
         //Wrapping the response in another array since the API returns [ [{},{},{}] ]

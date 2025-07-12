@@ -3,6 +3,7 @@ package ibm.event.sync.EventSync.services;
 import ibm.event.sync.EventSync.dtos.EventDTO;
 import ibm.event.sync.EventSync.dtos.SentimentResponseDTO;
 import ibm.event.sync.EventSync.entities.Event;
+import ibm.event.sync.EventSync.exceptionHandling.exceptions.EventNotFoundException;
 import ibm.event.sync.EventSync.mappers.EventMapper;
 import ibm.event.sync.EventSync.repositories.EventRepository;
 import org.springframework.stereotype.Service;
@@ -28,7 +29,7 @@ public class EventService {
     }
 
     public EventDTO getEventById(UUID id){
-        Event event = eventRepository.findById(id).orElseThrow( () -> new RuntimeException("Event not found with id: " + id));
+        Event event = eventRepository.findById(id).orElseThrow(() -> new EventNotFoundException("Event not found with ID: " + id));
         return eventMapper.toDTO(event);
     }
 
@@ -39,9 +40,10 @@ public class EventService {
         return eventMapper.toDTO(savedEvent);
     }
 
+    //Frontend functionality not implemented but works via Postman or Swagger
     public boolean delete(UUID id){
         if (!eventRepository.existsById(id)){
-            return false;
+            throw new EventNotFoundException("Event not found with ID: " + id);
         }
         eventRepository.deleteById(id);
         return true;

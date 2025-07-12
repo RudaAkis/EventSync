@@ -2,6 +2,7 @@ package ibm.event.sync.EventSync.controllers;
 
 import ibm.event.sync.EventSync.dtos.EventDTO;
 import ibm.event.sync.EventSync.services.EventService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -30,7 +31,7 @@ public class EventController {
     }
 
     @PostMapping
-    public ResponseEntity<EventDTO> create(@RequestBody EventDTO requestDTO){
+    public ResponseEntity<EventDTO> create(@Valid @RequestBody EventDTO requestDTO){
         return new ResponseEntity<>(eventService.create(requestDTO), HttpStatus.CREATED);
     }
 

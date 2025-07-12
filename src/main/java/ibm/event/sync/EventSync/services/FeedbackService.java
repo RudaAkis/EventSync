@@ -3,6 +3,7 @@ package ibm.event.sync.EventSync.services;
 import ibm.event.sync.EventSync.dtos.*;
 import ibm.event.sync.EventSync.entities.Event;
 import ibm.event.sync.EventSync.entities.Feedback;
+import ibm.event.sync.EventSync.exceptionHandling.exceptions.EventNotFoundException;
 import ibm.event.sync.EventSync.mappers.EventMapper;
 import ibm.event.sync.EventSync.mappers.FeedbackMapper;
 import ibm.event.sync.EventSync.repositories.EventRepository;
@@ -48,7 +49,7 @@ public class FeedbackService {
                 sentimentUtil.convertSentimentLabelToSentimentValue(sentimentUtil.maxSentimentValueResponse(sentimentResponseArray));
 
         Event event = eventRepository.findById(eventId)
-                .orElseThrow(() -> new RuntimeException("Event was not found with ID: " + eventId));
+                .orElseThrow(() -> new EventNotFoundException("Event was not found with ID: " + eventId));
 
         Feedback feedback = new Feedback();
         feedback.setMessage(feedbackSubmitDTO.getMessage());
@@ -62,11 +63,10 @@ public class FeedbackService {
     }
 
     public List<SentimentSummaryDTO> getSentimentSummaryForEvent(UUID eventId){
-        List<SentimentSummaryDTO> sentimentSummaryList = feedbackRepository.getSentimentSummaryByEvent(eventId);
-        for (SentimentSummaryDTO s : sentimentSummaryList){
-            System.out.println(s.getSentiment() + " " + s.getCount());
+        if (!eventRepository.existsById(eventId)) {
+            throw new EventNotFoundException("Event not found with ID: " + eventId);
         }
-        return sentimentSummaryList;
+        return feedbackRepository.getSentimentSummaryByEvent(eventId);
     }
 
 }

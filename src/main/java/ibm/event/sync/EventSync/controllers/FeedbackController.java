@@ -4,6 +4,7 @@ import ibm.event.sync.EventSync.dtos.FeedbackDTO;
 import ibm.event.sync.EventSync.dtos.FeedbackSubmitDTO;
 import ibm.event.sync.EventSync.dtos.SentimentSummaryDTO;
 import ibm.event.sync.EventSync.services.FeedbackService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +23,7 @@ public class FeedbackController {
     }
 
     @PostMapping("/{eventId}/feedback")
-    public ResponseEntity<FeedbackDTO> submitFeedback(@RequestBody FeedbackSubmitDTO feedbackSubmitDTO, @PathVariable UUID eventId){
+    public ResponseEntity<FeedbackDTO> submitFeedback(@Valid @RequestBody FeedbackSubmitDTO feedbackSubmitDTO, @PathVariable UUID eventId){
         return new ResponseEntity<>(feedbackService.submitFeedback(feedbackSubmitDTO, eventId),HttpStatus.CREATED);
     }
 
